@@ -1,0 +1,32 @@
+page-home {
+
+  .MenuBox{
+    border: 1px solid;
+    border-radius: 5px;
+    height: 138px;
+    text-align: center;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center
+  }
+
+  .disabled{
+    border: 1px solid #999999 !important;
+    background-color: #cccccc !important;
+    color: #666666 !important;
+    cursor: not-allowed;
+  }
+
+  ion-grid.grid{
+    padding: 34px 2px !important;
+    
+  }
+
+  ion-col.col{
+    padding: 10px !important;
+  }
+}

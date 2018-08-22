@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      To Do List
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6 > <div class="MenuBox" (click)="goToMyList()">My List</div> </ion-col>
+      <ion-col col-6> <div class="MenuBox disabled" (click)="comingSoon()">About</div> </ion-col>
+    </ion-row>
+    <ion-row>
+     <ion-col col-6> <div class="MenuBox disabled" (click)="comingSoon()">JAZ <br>
+      <small>Profile</small></div> </ion-col>
+     <ion-col col-6> <div class="MenuBox disabled" (click)="comingSoon()">ALL</div> </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
