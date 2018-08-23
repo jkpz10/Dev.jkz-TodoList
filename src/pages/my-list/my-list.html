@@ -14,7 +14,7 @@
       </button>
     </ion-buttons>
     <ion-buttons end padding-right>
-      <button ion-button clear color="dark" (click)="click()">
+      <button ion-button clear color="dark" (click)="showAdd()">
         <ion-icon class="font-lg pointer" name="add"></ion-icon>
       </button>
     </ion-buttons>
@@ -30,11 +30,11 @@
 
 <ion-content padding>
   <div [hidden]="IsHidden">
-    <ion-searchbar  (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-searchbar></ion-searchbar>
   </div>
   <ion-list no-lines>
-    <button ion-item *ngFor="let item of items" >
-      {{ item }}
+    <button ion-item *ngFor="let list of todoView | async">
+      {{ list.ListName }}
     </button>
   </ion-list>
 </ion-content>

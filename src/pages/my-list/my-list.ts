@@ -1,5 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { List } from '../../Database/Todo-List/list';
+import { TodoService } from '../../Database/service/todo.service';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+//FIX OBSERVALBE to able  to view list
+// npm i rxjs@6 rxjs-compat@6 promise-polyfill --save
+// then add import 'rxjs/add/operator/map';
 
 /**
  * Generated class for the MyListPage page.
@@ -15,12 +23,30 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MyListPage {
 
-  items; //list item property
+  todoView: Observable<List[]>
+
+  list: List = {
+    ListName: '',
+    date: undefined,
+    category: '',
+  }
+
   IsHidden = true; //hide serach input
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.initializeItems(); // from ionic documentation
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public alertCtrl: AlertController,
+    private todoList: TodoService
+  ) {
+    this.todoView = this.todoList.getList()
+      .snapshotChanges()
+      .map(change => {
+        return change.map( c => ({
+          key: c.payload.key, ...c.payload.val()
+        }))
+      });
   }
 
   ionViewDidLoad() {
@@ -29,71 +55,57 @@ export class MyListPage {
 
   //Custom methods
 
-  showSearch(){
+  showSearch() {
     this.IsHidden = !this.IsHidden;
   }
 
-  click(){
+  click() {
     console.log("clicked");
   }
 
-  //search List example from ionic documentation.
-  //Temporary LIST form development purposes
-  initializeItems() {
-    this.items = [
-      'Amsterdam',
-      'Bogota',
-      'Buenos Aires',
-      'Cairo',
-      'Dhaka',
-      'Edinburgh',
-      'Geneva',
-      'Genoa',
-      'Glasglow',
-      'Hanoi',
-      'Hong Kong',
-      'Islamabad',
-      'Istanbul',
-      'Jakarta',
-      'Kiel',
-      'Kyoto',
-      'Le Havre',
-      'Lebanon',
-      'Lhasa',
-      'Lima',
-      'London',
-      'Los Angeles',
-      'Madrid',
-      'Manila',
-      'New York',
-      'Olympia',
-      'Oslo',
-      'Panama City',
-      'Peking',
-      'Philadelphia',
-      'San Francisco',
-      'Seoul',
-      'Taipeh',
-      'Tel Aviv',
-      'Tokio',
-      'Uelzen',
-      'Washington'
-    ];
+  //ADD ALERT
+  showAdd() {
+    const prompt = this.alertCtrl.create({
+      title: 'Add List',
+      message: "Enter a name of this list , date and category",
+      inputs: [
+        {
+          name: 'ListName',
+          placeholder: 'Name',
+          type: 'text'
+        },
+        {
+          name: 'date',
+          placeholder: 'Date',
+          type: 'date'
+        },
+        {
+          name: 'category',
+          placeholder: 'Tags',
+          type: 'text'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel');
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            console.log('Saved');
+            this.list = {
+              ListName: data.ListName,
+              date: data.date,
+              category: data.category
+            }
+            this.todoList.addList(this.list); //push data to firebase
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
-
-  getItems(ev) {
-    // Reset items back to all of the items
-    this.initializeItems();
-
-    // set val to the value of the ev target
-    var val = ev.target.value;
-
-    // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.items = this.items.filter((item) => {
-        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
-    }
-  }
-
 }
