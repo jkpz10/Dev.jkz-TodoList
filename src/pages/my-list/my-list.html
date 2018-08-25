@@ -14,10 +14,16 @@
       </button>
     </ion-buttons>
     <ion-buttons end padding-right>
+      <button ion-button clear color="dark">
+        <ion-icon name="md-checkmark-circle-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end padding-right>
       <button ion-button clear color="dark" (click)="showAdd()">
         <ion-icon class="font-lg pointer" name="add"></ion-icon>
       </button>
     </ion-buttons>
+    
 
   </ion-navbar>
   <ion-navbar>
@@ -27,14 +33,22 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding>
   <div [hidden]="IsHidden">
     <ion-searchbar></ion-searchbar>
   </div>
   <ion-list no-lines>
-    <button ion-item *ngFor="let list of todoView | async">
-      {{ list.ListName }}
-    </button>
+    <ion-item *ngFor="let list of todoView | async">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-11 class="pointer" (click)="showSingleList(list)">
+            {{ list.ListName | titlecase }}
+          </ion-col>
+          <ion-col col-1 class="pointer" (click)="singleSettings(list)">
+              <ion-icon  name="settings" ></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
   </ion-list>
 </ion-content>

@@ -18,7 +18,7 @@ import { CustomToast } from '../services/toast/toast.service';
   declarations: [
     MyApp,
     HomePage,
-    MyListPage
+    MyListPage,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +30,8 @@ import { CustomToast } from '../services/toast/toast.service';
   entryComponents: [
     MyApp,
     HomePage,
-    MyListPage
+    MyListPage,
+    
   ],
   providers: [
     StatusBar,
