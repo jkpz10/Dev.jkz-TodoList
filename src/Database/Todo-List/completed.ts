@@ -5,5 +5,4 @@ export  interface Completed {
   date: string;
   category: string;
   status: string;
-  done: string;
 }

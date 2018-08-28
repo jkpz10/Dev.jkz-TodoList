@@ -13,12 +13,14 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MyListPage } from '../pages/my-list/my-list';
 import { CustomToast } from '../services/toast/toast.service';
+import { CompletedListPage } from '../pages/completed-list/completed-list';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     MyListPage,
+    CompletedListPage
   ],
   imports: [
     BrowserModule,
@@ -31,6 +33,7 @@ import { CustomToast } from '../services/toast/toast.service';
     MyApp,
     HomePage,
     MyListPage,
+    CompletedListPage
     
   ],
   providers: [

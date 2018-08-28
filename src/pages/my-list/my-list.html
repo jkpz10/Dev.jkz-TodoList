@@ -14,7 +14,7 @@
       </button>
     </ion-buttons>
     <ion-buttons end padding-right>
-      <button ion-button clear color="dark">
+      <button ion-button clear color="dark" (click)="showCompleted()">
         <ion-icon name="md-checkmark-circle-outline"></ion-icon>
       </button>
     </ion-buttons>
@@ -35,17 +35,17 @@
 
 <ion-content padding>
   <div [hidden]="IsHidden">
-    <ion-searchbar></ion-searchbar>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   </div>
   <ion-list no-lines>
     <ion-item *ngFor="let list of todoView | async">
       <ion-grid>
         <ion-row>
-          <ion-col col-11 class="pointer" (click)="showSingleList(list)">
+          <ion-col col-11 class="pointer" (click)="showConfirm(list)">
             {{ list.ListName | titlecase }}
           </ion-col>
           <ion-col col-1 class="pointer" (click)="singleSettings(list)">
-              <ion-icon  name="settings" ></ion-icon>
+              <ion-icon ios="ios-more" md="md-more"></ion-icon>
           </ion-col>
         </ion-row>
       </ion-grid>

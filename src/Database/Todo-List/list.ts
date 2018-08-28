@@ -4,5 +4,4 @@ export  interface List {
   date: string;
   category: string;
   status: string;
-  done: string;
 }

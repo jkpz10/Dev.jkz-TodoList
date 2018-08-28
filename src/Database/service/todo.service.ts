@@ -16,6 +16,12 @@ export class TodoService {
 
   ) { }
 
+  //For Timestamp
+  date = new Date();
+  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+ 
+  dateNow = `${this.months[this.date.getMonth()]} ${this.date.getDate()}, ${this.date.getFullYear()} | ${this.date.getHours()}:${this.date.getMinutes()}:${this.date.getSeconds()}`;
+
   //CREATE
   addList(list: List) {
     return this.todoListdb.push(list);
@@ -23,14 +29,12 @@ export class TodoService {
 
   //READ
   getList() {
-    return this.db.list<List>('Todo-list', ref => ref.orderByChild('status').equalTo('active') && ref.orderByChild('done').equalTo('Uncomplete')); //filter display only with the status = "active"
+    return this.db.list<List>('Todo-list', ref => ref.orderByChild('status').equalTo('active'));
+  }
+  //filter display only with the status = "active"
 
-    // return this.todoListdb.db.list('/Todo-list', ref => ref.orderByChild('status').equalTo('active'))
-    // return this.todoListdb;
-  }
-  completedList() {
-    return this.completeListObservables;
-  }
+  // return this.todoListdb.db.list('/Todo-list', ref => ref.orderByChild('status').equalTo('active'))
+  // return this.todoListdb;
 
   //UPDATE
   editList(list: List) {
@@ -40,17 +44,15 @@ export class TodoService {
   //COMPLETED
   completList(list: List) {
     let complete = {
-      TodoListID: list.key,
+      ListID: list.key,
       ListName: list.ListName,
-      date: Date(),
+      date: this.dateNow,
       category: list.category,
-      status: list.status,
-      done: 'Completed'
+      status: 'Completed',
     }
-    list.done = 'Completed'
-    return this.todoListdb.update(list.key,list),
-    this.completeListdb.push(complete);
-    
+    list.status = 'Completed'
+    return this.todoListdb.update(list.key, list),
+      this.completeListdb.push(complete);
   }
 
   //temporary delete
@@ -62,6 +64,23 @@ export class TodoService {
   //DELETE permanently
   removeList(list: List) {
     return this.todoListdb.remove(list.key);
+  }
+
+  //FOR COMPLETED PAGE
+    //READ
+  completedList() {
+    return this.completeListObservables;
+  }
+    //DELETE
+  removeCompletList(completed: Completed) {
+    let x = {
+      ListName: completed.ListName,
+      date: this.dateNow,
+      category: completed.category,
+      status: 'active'
+    }
+
+    return this.completeListObservables.remove(completed.key), this.todoListdb.update(completed.ListID, x);
   }
 
 }
