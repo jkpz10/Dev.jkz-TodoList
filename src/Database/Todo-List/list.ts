@@ -1,4 +1,4 @@
-export  interface List {
+export  interface List { // table properties to store in database
   key?: string;
   ListName: string;
   date: string;

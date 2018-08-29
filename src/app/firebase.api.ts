@@ -6,4 +6,4 @@ export const config =  {
     projectId: "to-do-list-87cf8",
     storageBucket: "to-do-list-87cf8.appspot.com",
     messagingSenderId: "420512245335"
-  };
+  }; //firebase api key. to connect my app to firebase database

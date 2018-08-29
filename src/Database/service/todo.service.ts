@@ -3,6 +3,7 @@ import { List } from "../Todo-List/list";
 import { AngularFireDatabase } from "angularfire2/database";
 import { Completed } from "../Todo-List/completed";
 
+//script to acces connection to firebase using angularfire2
 
 @Injectable()
 export class TodoService {
@@ -15,6 +16,9 @@ export class TodoService {
     private db: AngularFireDatabase
 
   ) { }
+
+  // custom methods
+    //firebase queries. 
 
   //For Timestamp
   date = new Date();
@@ -41,12 +45,12 @@ export class TodoService {
     return this.todoListdb.update(list.key, list);
   }
 
-  //COMPLETED
+  //COMPLETED -- trigger this method when user complete the task list
   completList(list: List) {
     let complete = {
       ListID: list.key,
       ListName: list.ListName,
-      date: this.dateNow,
+      date: Date(),
       category: list.category,
       status: 'Completed',
     }
@@ -71,16 +75,20 @@ export class TodoService {
   completedList() {
     return this.completeListObservables;
   }
-    //DELETE
+    //DELETE - if user want to revert back the completed item to uncomplete
   removeCompletList(completed: Completed) {
     let x = {
       ListName: completed.ListName,
-      date: this.dateNow,
+      date: Date(),
       category: completed.category,
       status: 'active'
     }
 
     return this.completeListObservables.remove(completed.key), this.todoListdb.update(completed.ListID, x);
+  }
+
+  deletePermanent(completed:Completed){
+    return this.completeListObservables.remove(completed.key), this.todoListdb.remove(completed.ListID);
   }
 
 }

@@ -14,12 +14,12 @@
       </button>
     </ion-buttons>
     <ion-buttons end padding-right>
-      <button ion-button clear color="dark" (click)="showCompleted()">
+      <button ion-button clear color="secondary" (click)="showCompleted()">
         <ion-icon name="md-checkmark-circle-outline"></ion-icon>
       </button>
     </ion-buttons>
     <ion-buttons end padding-right>
-      <button ion-button clear color="dark" (click)="showAdd()">
+      <button ion-button clear color="primary" (click)="showAdd()">
         <ion-icon class="font-lg pointer" name="add"></ion-icon>
       </button>
     </ion-buttons>
@@ -41,7 +41,7 @@
     <ion-item *ngFor="let list of todoView | async">
       <ion-grid>
         <ion-row>
-          <ion-col col-11 class="pointer" (click)="showConfirm(list)">
+          <ion-col col-11 class="pointer" (click)="showSingleList(list)">
             {{ list.ListName | titlecase }}
           </ion-col>
           <ion-col col-1 class="pointer" (click)="singleSettings(list)">
